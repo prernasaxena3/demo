@@ -6,7 +6,7 @@ import PatchManagement from './pages/PatchManagement';
 import IntelligentAlerts from './pages/IntelligentAlerts';
 import ResourceMonitor from './pages/ResourceMonitor';
 import DriftManagement from './pages/DriftManagement';
-import './App.css';
+
 
 function App() {
   return (
