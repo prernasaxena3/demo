@@ -418,7 +418,7 @@ const ResourceMonitor = () => {
         </div>
       </div>
     </div>
-  )
+  
   );
 };
 
