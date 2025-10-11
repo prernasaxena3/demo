@@ -380,7 +380,7 @@ const ResourceMonitor = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span style={{ color: '#123458' }}>Response Time</span>
-                    <span className="text-green-600">< 100ms</span>
+                    <span className="text-green-600">100ms</span>
                   </div>
                 </div>
               </div>
