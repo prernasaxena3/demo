@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import Modal from '../components/Modal';
+import { useToast } from '../components/Toast';
 import { GitBranch, GitCommitVertical as GitCommit, GitMerge, Shield, AlertTriangle, CheckCircle, Clock, RotateCcw, Bot, User, ArrowRight, Circle, RefreshCw, Settings, HardDrive, FileText, Eye } from 'lucide-react';
 
 const DriftManagement = () => {
+  const { showToast, ToastContainer } = useToast();
   const [selectedEvent, setSelectedEvent] = useState('DFT-001');
-
-  const driftFlowData = [
+  const [showConfigModal, setShowConfigModal] = useState(false);
+  const [showRestoreModal, setShowRestoreModal] = useState(false);
+  const [driftFlowData, setDriftFlowData] = useState([
     {
       id: 'DFT-001',
       device: 'WS-Marketing-01',
@@ -66,15 +70,110 @@ const DriftManagement = () => {
         { type: 'restore', version: 'v2023.2.1-original', timestamp: '12:18:30', status: 'resolved' }
       ]
     }
-  ];
+  ]);
 
   const driftStats = {
-    totalEvents: 47,
-    resolvedEvents: 42,
-    pendingEvents: 3,
-    criticalEvents: 2,
+    totalEvents: driftFlowData.length,
+    resolvedEvents: driftFlowData.filter(d => d.status === 'resolved').length,
+    pendingEvents: driftFlowData.filter(d => d.status === 'pending').length,
+    criticalEvents: driftFlowData.filter(d => d.severity === 'critical').length,
     autoResolved: 89,
     manualActions: 11
+  };
+
+  const handleRefresh = () => {
+    showToast('Refreshing drift events...', 'info');
+    setTimeout(() => {
+      showToast('Drift events refreshed', 'success');
+    }, 1000);
+  };
+
+  const handleBulkRestore = () => {
+    const pendingEvents = driftFlowData.filter(event => event.status === 'pending');
+    if (pendingEvents.length === 0) {
+      showToast('No pending events to restore', 'info');
+      return;
+    }
+    
+    setShowRestoreModal(true);
+  };
+
+  const confirmBulkRestore = () => {
+    const pendingEvents = driftFlowData.filter(event => event.status === 'pending');
+    showToast(`Restoring ${pendingEvents.length} events...`, 'info');
+    
+    pendingEvents.forEach((event, index) => {
+      setTimeout(() => {
+        setDriftFlowData(prev => prev.map(e => 
+          e.id === event.id ? { 
+            ...e, 
+            status: 'resolved',
+            restoredVersion: e.originalVersion,
+            flowSteps: [
+              ...e.flowSteps,
+              { type: 'restore', version: e.originalVersion, timestamp: new Date().toLocaleTimeString(), status: 'resolved' }
+            ]
+          } : e
+        ));
+        showToast(`${event.id} restored successfully`, 'success');
+      }, (index + 1) * 1000);
+    });
+    
+    setShowRestoreModal(false);
+  };
+
+  const handleRestoreEvent = (eventId) => {
+    const event = driftFlowData.find(e => e.id === eventId);
+    if (!event) return;
+    
+    showToast(`Restoring ${eventId}...`, 'info');
+    
+    setTimeout(() => {
+      setDriftFlowData(prev => prev.map(e => 
+        e.id === eventId ? { 
+          ...e, 
+          status: 'resolved',
+          restoredVersion: e.originalVersion,
+          flowSteps: [
+            ...e.flowSteps,
+            { type: 'restore', version: e.originalVersion, timestamp: new Date().toLocaleTimeString(), status: 'resolved' }
+          ]
+        } : e
+      ));
+      showToast(`${eventId} restored successfully`, 'success');
+    }, 2000);
+  };
+
+  const handleInvestigateEvent = (eventId) => {
+    showToast(`Opening investigation for ${eventId}`, 'info');
+    // In a real app, this would open a detailed investigation view
+  };
+
+  const handleExportFlow = () => {
+    const report = {
+      timestamp: new Date().toISOString(),
+      events: driftFlowData,
+      statistics: driftStats
+    };
+    
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `drift-flow-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast('Drift flow exported successfully', 'success');
+  };
+
+  const handleBackupNow = () => {
+    showToast('Creating backup snapshots...', 'info');
+    setTimeout(() => {
+      showToast('Backup completed for all monitored configurations', 'success');
+    }, 3000);
   };
 
   const getSeverityColor = (severity) => {
@@ -234,6 +333,8 @@ const DriftManagement = () => {
   };
 
   return (
+    <>
+      <ToastContainer />
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Page Header */}
       <div className="mb-8">
@@ -248,6 +349,7 @@ const DriftManagement = () => {
           </div>
           <div className="mt-4 md:mt-0 flex space-x-3">
             <button className="px-4 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+              onClick={handleRefresh}
               <RefreshCw className="w-4 h-4 inline mr-2" />
               Refresh
             </button>
@@ -336,6 +438,11 @@ const DriftManagement = () => {
               <div 
                 key={event.id} 
                 className={`p-4 cursor-pointer transition-colors ${selectedEvent === event.id ? 'bg-opacity-50' : 'hover:bg-opacity-25'}`}
+                onClick={() => showToast('Merge functionality coming soon', 'info')}
+                onClick={() => showToast('Branch creation functionality coming soon', 'info')}
+                onClick={() => setShowConfigModal(true)}
+                onClick={handleBackupNow}
+                onClick={handleExportFlow}
                 style={{ backgroundColor: selectedEvent === event.id ? '#F1EFEC' : 'transparent' }}
                 onClick={() => setSelectedEvent(event.id)}
               >
@@ -405,6 +512,7 @@ const DriftManagement = () => {
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
               <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
+                onClick={handleBulkRestore}
                 <RotateCcw className="w-4 h-4" />
                 <span>Bulk Restore</span>
               </button>
@@ -433,7 +541,103 @@ const DriftManagement = () => {
         </div>
       </div>
     </div>
+
+      {/* Configuration Modal */}
+      <Modal
+        isOpen={showConfigModal}
+        onClose={() => setShowConfigModal(false)}
+        title="Drift Management Configuration"
+        size="lg"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#123458' }}>
+              Monitoring Sensitivity
+            </label>
+            <select className="w-full p-2 border rounded-lg" style={{ borderColor: '#D4C9BE' }}>
+              <option>High - Detect all changes</option>
+              <option>Medium - Ignore minor changes</option>
+              <option>Low - Only critical changes</option>
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-2" style={{ color: '#123458' }}>
+              Auto-Restore Policy
+            </label>
+            <div className="space-y-2">
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" defaultChecked />
+                <span className="text-sm" style={{ color: '#123458' }}>Auto-restore configuration files</span>
+              </label>
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" />
+                <span className="text-sm" style={{ color: '#123458' }}>Auto-restore binary files</span>
+              </label>
+              <label className="flex items-center">
+                <input type="checkbox" className="mr-2" defaultChecked />
+                <span className="text-sm" style={{ color: '#123458' }}>Create backup before restore</span>
+              </label>
+            </div>
+          </div>
+          
+          <div className="flex justify-end space-x-3 pt-4">
+            <button 
+              onClick={() => setShowConfigModal(false)}
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{ backgroundColor: '#D4C9BE', color: '#123458' }}
+            >
+              Cancel
+            </button>
+            <button 
+              onClick={() => {
+                setShowConfigModal(false);
+                showToast('Drift management configuration saved', 'success');
+              }}
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{ backgroundColor: '#123458', color: '#F1EFEC' }}
+            >
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Bulk Restore Confirmation Modal */}
+      <Modal
+        isOpen={showRestoreModal}
+        onClose={() => setShowRestoreModal(false)}
+        title="Bulk Restore Confirmation"
+      >
+        <div className="space-y-4">
+          <p style={{ color: '#123458' }}>
+            Are you sure you want to restore all pending drift events? This will:
+          </p>
+          <ul className="list-disc list-inside space-y-1 text-sm" style={{ color: '#123458' }}>
+            <li>Restore {driftFlowData.filter(d => d.status === 'pending').length} configurations to their original state</li>
+            <li>Create backup snapshots before restoration</li>
+            <li>Generate detailed restoration logs</li>
+          </ul>
+          
+          <div className="flex justify-end space-x-3 pt-4">
+            <button 
+              onClick={() => setShowRestoreModal(false)}
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{ backgroundColor: '#D4C9BE', color: '#123458' }}
+            >
+              Cancel
+            </button>
+            <button 
+              onClick={confirmBulkRestore}
+              className="px-4 py-2 rounded-lg text-sm font-medium"
+              style={{ backgroundColor: '#123458', color: '#F1EFEC' }}
+            >
+              Restore All
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
-
 export default DriftManagement;
