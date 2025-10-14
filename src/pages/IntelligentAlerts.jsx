@@ -370,33 +370,6 @@ const IntelligentAlerts = () => {
           </div>
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <div className="mt-6">
-        <div className="rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
-          <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
-            <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Quick Actions</h3>
-          </div>
-          <div className="p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
-                <Bot className="w-4 h-4" />
-                <span>Auto-Resolve All</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <X className="w-4 h-4" />
-                <span>Dismiss Resolved</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <Shield className="w-4 h-4" />
-                <span>Security Scan</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <HardDrive className="w-4 h-4" />
-                <span>Export Report</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -502,47 +502,6 @@ const DriftManagement = () => {
           )}
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <div className="mt-6">
-        <div className="rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
-          <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
-            <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Quick Actions</h3>
-          </div>
-          <div className="p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
-                onClick={() => handleBulkRestore()}
-                <RotateCcw className="w-4 h-4" />
-                <span>Bulk Restore</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                onClick={() => showToast('Merge functionality coming soon', 'info')}
-                <GitMerge className="w-4 h-4" />
-                <span>Merge Changes</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                onClick={() => showToast('Branch creation functionality coming soon', 'info')}
-                <GitBranch className="w-4 h-4" />
-                <span>Create Branch</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                onClick={() => setShowConfigModal(true)}
-                <Settings className="w-4 h-4" />
-                <span>Configure Rules</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                onClick={() => handleBackupNow()}
-                <HardDrive className="w-4 h-4" />
-                <span>Backup Now</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                onClick={() => handleExportFlow()}
-                <FileText className="w-4 h-4" />
-                <span>Export Flow</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
