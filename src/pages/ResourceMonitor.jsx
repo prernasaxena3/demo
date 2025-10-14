@@ -128,7 +128,7 @@ const ResourceMonitor = () => {
             <h3 className="font-semibold" style={{ color: '#123458' }}>{title}</h3>
           </div>
           <div className="text-2xl font-bold" style={{ color: color }}>
-            {selectedDeviceData ? selectedDeviceData[dataKey.toLowerCase()] : 0}{unit}
+            {data && data.length > 0 ? data[data.length - 1][dataKey.toLowerCase()] : 0}{unit}
           </div>
         </div>
       </div>

@@ -149,6 +149,37 @@ const PatchManagement = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Quick Actions - Left Side */}
+        <div className="lg:col-span-1">
+          <div className="rounded-xl shadow-sm sticky top-6" style={{ backgroundColor: '#FFFFFF' }}>
+            <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
+              <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Quick Actions</h3>
+            </div>
+            <div className="p-4 space-y-3">
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
+                <Play className="w-4 h-4" />
+                <span>Deploy All</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <Pause className="w-4 h-4" />
+                <span>Pause Updates</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <RotateCcw className="w-4 h-4" />
+                <span>Rollback</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <Download className="w-4 h-4" />
+                <span>Export Report</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Device Management */}
         <div className="rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
           <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
@@ -254,33 +285,6 @@ const PatchManagement = () => {
           </div>
         </div>
       </div>
-
-      {/* Quick Actions */}
-      <div className="mt-6">
-        <div className="rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
-          <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
-            <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Quick Actions</h3>
-          </div>
-          <div className="p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
-                <Play className="w-4 h-4" />
-                <span>Deploy All</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <Pause className="w-4 h-4" />
-                <span>Pause Updates</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <RotateCcw className="w-4 h-4" />
-                <span>Rollback</span>
-              </button>
-              <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
-                <Download className="w-4 h-4" />
-                <span>Export Report</span>
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
