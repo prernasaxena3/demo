@@ -20,8 +20,7 @@ const Navbar = () => {
     { path: '/patch-management', label: 'Patch Management' },
     { path: '/intelligent-alerts', label: 'Intelligent Alerts' },
     { path: '/resource-monitor', label: 'Resource Monitor' },
-    { path: '/drift-management', label: 'Drift Management' },
-    { path: '/installation', label: 'Installation' }
+    { path: '/drift-management', label: 'Drift Management' }
   ];
 
   const isActive = (path) => location.pathname === path;
