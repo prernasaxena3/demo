@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import Modal from '../components/Modal';
+import { useToast } from '../components/Toast';
 import { GitBranch, GitCommitVertical as GitCommit, GitMerge, Shield, AlertTriangle, CheckCircle, Clock, RotateCcw, Bot, User, ArrowRight, Circle, RefreshCw, Settings, HardDrive, FileText, Eye } from 'lucide-react';
 
 const DriftManagement = () => {
