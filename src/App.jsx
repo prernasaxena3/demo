@@ -18,6 +18,7 @@ function App() {
         <Route path="/intelligent-alerts" element={<IntelligentAlerts />} />
         <Route path="/resource-monitor" element={<ResourceMonitor />} />
         <Route path="/drift-management" element={<DriftManagement />} />
+        <Route path="/installation" element={<Installation />} />
       </Routes>
     </div>
   );

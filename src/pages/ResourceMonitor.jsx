@@ -128,7 +128,7 @@ const ResourceMonitor = () => {
             <h3 className="font-semibold" style={{ color: '#123458' }}>{title}</h3>
           </div>
           <div className="text-2xl font-bold" style={{ color: color }}>
-            {selectedDeviceData ? selectedDeviceData[dataKey.toLowerCase()] : 0}{unit}
+            {data && data.length > 0 ? data[data.length - 1][dataKey.toLowerCase()] : 0}{unit}
           </div>
         </div>
       </div>
@@ -270,8 +270,38 @@ const ResourceMonitor = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Quick Actions - Left Side */}
+        <div className="lg:col-span-1">
+          <div className="rounded-xl shadow-sm sticky top-6" style={{ backgroundColor: '#FFFFFF' }}>
+            <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
+              <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Quick Actions</h3>
+            </div>
+            <div className="p-4 space-y-3">
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#123458', color: '#F1EFEC' }}>
+                <RefreshCw className="w-4 h-4" />
+                <span>Refresh All</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <Settings className="w-4 h-4" />
+                <span>Configure Alerts</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <Download className="w-4 h-4" />
+                <span>Export Metrics</span>
+              </button>
+              <button className="w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors" style={{ backgroundColor: '#D4C9BE', color: '#123458' }}>
+                <Activity className="w-4 h-4" />
+                <span>Health Check</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Device List */}
-        <div className="rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="lg:col-span-1 rounded-xl shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
           <div className="p-4 border-b" style={{ borderColor: '#D4C9BE' }}>
             <h3 className="text-lg font-semibold" style={{ color: '#123458' }}>Devices</h3>
           </div>
@@ -423,3 +453,5 @@ const ResourceMonitor = () => {
 };
 
 export default ResourceMonitor;
+  )
+}
